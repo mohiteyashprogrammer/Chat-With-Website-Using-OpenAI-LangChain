@@ -7,3 +7,5 @@ python-dotenv
 streamlit
 chromadb
 bs4
+
+-e .

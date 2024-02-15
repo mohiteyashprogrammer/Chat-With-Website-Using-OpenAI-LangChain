@@ -1,16 +1,14 @@
 import streamlit as st
-from langchain_core.messages import AIMessage, HumanMessage
-from langchain_community.document_loaders import WebBaseLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.vectorstores import Chroma
-from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from dotenv import load_dotenv
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+import sys
+from langchain_core.messages import AIMessage, HumanMessage
 from langchain.chains import create_history_aware_retriever, create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
-from src.utils import get_context_retriever_chain,get_response,get_conversational_rag_chain,get_vectorstore_from_url,set_background
-
-
+from src.logger import logging
+from src.exception import CustomException
+from src.utils import get_context_retriever_chain,get_conversational_rag_chain,get_response,set_background,get_vectorstore_from_url
+import os
+import base64
 
 
 # App Configuration

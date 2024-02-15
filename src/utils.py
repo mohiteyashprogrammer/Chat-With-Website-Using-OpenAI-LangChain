@@ -161,7 +161,7 @@ def get_response(user_input):
     # Invoke the conversational RAG chain with chat history and user input
     response = conversational_rag_chain.invoke({
         "chat_history": st.session_state.chat_history,
-        "input": user_query
+        "input": user_input
     })
     
     # Return the generated answer from the response

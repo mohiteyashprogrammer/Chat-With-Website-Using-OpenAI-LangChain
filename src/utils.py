@@ -12,6 +12,7 @@ from dotenv import load_dotenv
 from src.logger import logging
 from src.exception import CustomException
 import os
+import base64
 
 # Load the environment variables from the .env file
 load_dotenv()
@@ -160,8 +161,36 @@ def get_response(user_input):
     # Invoke the conversational RAG chain with chat history and user input
     response = conversational_rag_chain.invoke({
         "chat_history": st.session_state.chat_history,
-        "input": user_input
+        "input": user_query
     })
     
     # Return the generated answer from the response
     return response["answer"]
+
+
+def set_background(image_file):
+    try:
+        """
+        This function sets the background of a Streamlit app to an image specified by the given image file.
+
+        Parameters:
+        image_file (str): The path to the image file to be used as the background.
+
+        Returns:
+        None
+        """
+        with open(image_file, "rb") as f:
+            img_data = f.read()
+        b64_encoded = base64.b64encode(img_data).decode()
+        style = f"""
+            <style>
+            .stApp {{
+                background-image: url(data:image/png;base64,{b64_encoded});
+             background-size: cover;
+            }}
+            </style>
+        """
+        st.markdown(style, unsafe_allow_html=True)
+    except Exception as e:
+        logging.info("Error occurred while setuping background image:")
+        raise Exception(e,sys)
